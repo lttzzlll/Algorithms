@@ -82,8 +82,15 @@ if __name__ == '__main__':
 	# original input data
 	res = (l, r, max_value) = find_maximum_subarray(input_data, 0, len(input_data)-1)
 	print res
+
 	# each item in input data is nagative
-	input_data_negative = [ item * -1 for item in input_data if item > 0 ]
+	input_data_negative = []
+	for item in input_data:
+		if item < 0:
+			input_data_negative.append(item)
+		else:
+			input_data_negative.append(item*-1)
+
 	res = (l, r, max_value) = find_maximum_subarray(input_data_negative, 0, len(input_data_negative)-1)
 	print res
 	

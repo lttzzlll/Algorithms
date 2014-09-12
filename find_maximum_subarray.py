@@ -43,6 +43,11 @@ def find_maximum_subarray(arr):
 
 if __name__== '__main__':
 	# original input_data
+	print ' sample input data is below'
+	for item in input_data:
+		print item,
+	print
+
 	res = (l, r, max_value) = find_maximum_subarray(input_data)
 	print res
 	for i in range(l, r+1):
@@ -50,7 +55,17 @@ if __name__== '__main__':
 	print
 
 	# each item in input_data is negative
-	input_data_negative = [ item * -1 for item in input_data if item > 0 ]
+	input_data_negative = []
+	for item in input_data:
+		if item < 0:
+			input_data_negative.append(item)
+		else:
+			input_data_negative.append(item*-1)
+
+	print ' smaple negative input data is below'
+	for item in input_data_negative:
+		print item,
+	print
 	res = (l, r, max_value) = find_maximum_subarray(input_data_negative)
 	print res
 	for i in range(l, r+1):
