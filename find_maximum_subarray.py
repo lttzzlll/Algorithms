@@ -42,7 +42,7 @@ def find_maximum_subarray(arr):
 						
 
 if __name__== '__main__':
-	# each item in input_data is positive 
+	# original input_data
 	res = (l, r, max_value) = find_maximum_subarray(input_data)
 	print res
 	for i in range(l, r+1):
