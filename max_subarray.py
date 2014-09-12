@@ -5,7 +5,7 @@
 
 
 '''input data'''
-l = [ 
+input_data = [ 
 	13,
 	-3,
 	-25,
@@ -79,5 +79,11 @@ def find_maximum_subarray(a, low, high):
 
 ''' main '''
 if __name__ == '__main__':
-	print find_maximum_subarray(l, 0, len(l)-1)
-
+	# original input data
+	res = (l, r, max_value) = find_maximum_subarray(input_data, 0, len(input_data)-1)
+	print res
+	# each item in input data is nagative
+	input_data_negative = [ item * -1 for item in input_data if item > 0 ]
+	res = (l, r, max_value) = find_maximum_subarray(input_data_negative, 0, len(input_data_negative)-1)
+	print res
+	
