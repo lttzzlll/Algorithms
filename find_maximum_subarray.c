@@ -24,6 +24,8 @@ int input_data[]= {
 };
 
 // find maximum subarry , return triple tuple
+// it cause momery dispose but not to much
+// how to collect the momery ? ? ?
 int * find_maximum_subarray(int *arr, int length) {
 	int * triple_tuple = (int *)malloc(sizeof(int) * 3);
 	int i, j, l, r, max_sum, total_sum;
@@ -40,10 +42,10 @@ int * find_maximum_subarray(int *arr, int length) {
 			}
 		}
 	}
-	arr[0] = l;
-	arr[1] = r;
-	arr[2] = max_sum;
-	return arr;
+	triple_tuple[0] = l;
+	triple_tuple[1] = r;
+	triple_tuple[2] = max_sum;
+	return triple_tuple;
 }
 
 int main() {
@@ -61,7 +63,9 @@ int main() {
 	p = find_maximum_subarray(input_data, length);
 	l = p[0];
 	r = p[1];
+
 	max_value = p[2];
+
 	printf("l==%d, r==%d, max_value==%d\n", l, r, max_value);
 
 	for(i=l; i<=r; i++) {
@@ -86,6 +90,7 @@ int main() {
 	l = p[0];
 	r = p[1];
 	max_value = p[2];
+
 	printf("l==%d, r==%d max_value==%d\n", l, r, max_value);
 
 	for(i=l; i<=r; i++) {

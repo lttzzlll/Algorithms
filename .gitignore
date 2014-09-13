@@ -42,3 +42,6 @@ coverage.xml
 
 # Sphinx documentation
 docs/_build/
+
+# about c files and output
+a.out
