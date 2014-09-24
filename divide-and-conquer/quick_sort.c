@@ -12,6 +12,7 @@ void swap(int *a, int *b) {
 }
 
 // find a proper pivot in array
+/*
 int partition(int *arr, int left, int right) {
 	int i = left;
 	int j= right;
@@ -37,6 +38,48 @@ int partition(int *arr, int left, int right) {
 
 	return i;
 }
+*/
+
+/*
+// divide the array and select a pivot
+int partition(int *arr, int left, int right) {
+	int *a1 = (int*)malloc(sizeof(int)*(right+1-left));
+	int *a2 = (int*)malloc(sizeof(int)*(right+1-left));
+	if (!a1 || !a2) {
+		exit(-1);
+	}
+
+	int pos = rand() % (right+1-left) + left;
+	printf(" pos is %d\n", pos);
+
+	int p1 = 0;
+	int p2 = 0;
+	int i, j;
+
+	for(i=left; i<=right; i++) {
+		if(arr[i]<=arr[pos]) {
+			a1[p1++] = arr[i];
+		}else {
+			a2[p2++] = arr[i];
+		}
+	}	
+	for(i=left, j=0; j<p1; j++,i++) {
+		arr[i] = a1[j];
+	}
+	for(j=0; j<p2; j++,i++) {
+		arr[i] = a2[j];
+	}
+	if(i-1!=right) {
+		printf(" index is not correct!\n");
+		exit(-1);
+	}
+
+	free(a1);
+	free(a2);
+
+	return p1 - 1;
+}
+*/
 
 // quick sort define 
 void quick_sort(int *arr, int left, int right) {
