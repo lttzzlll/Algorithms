@@ -1,14 +1,16 @@
 divide and conquer
 
-divide 
-conquer
-merge
+divide -> conquer -> merge
 
-include
+note {
+	each question is pacakged by a folder
+}
 
-merge sort
-quick sort
 
-find maximum subarray
-
-permutation
+include {
+	merge sort
+	quick sort
+	hanoi
+	find maximum subarray
+	permutation
+}
