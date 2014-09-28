@@ -50,33 +50,57 @@ void sort(int *arr, int n) {
 	}
 }
 
+void bubble_sort_large_to_small(int *arr, int n) {
+	for(int i=0; i<n; i++) {
+		int maxi = i;
+		for(int j=i+1; j<n; j++) {
+			if(arr[j]>arr[maxi]) {
+				maxi = j;
+			}
+		} { // swap two integer
+			int t = arr[i];
+			arr[i] = arr[maxi];
+			arr[maxi] = t;
+		}
+	}
+}
+
 int find_k_element(int *arr, int n, int k) {
 	int *p = (int*)malloc(sizeof(int)*k);
 	if(p==NULL) {
-		printf( " no free space\n");
+		printf("no free space\n");
 		exit(-1);
 	}
 
+	// copy to new array
 	for(int i=0; i<k; i++) {
 		p[i] = arr[i];
 	}
 
+	// sort it
 	sort(p, k);
+	/*
+	printf("in find\n");
+	show(p, k);
+	printf("end find\b");
+	*/
 
 	// core 
 	for(int i=k; i<n; i++) {
 		int j;
 		for(j=k-1; j>=0; j--) {
-			if(arr[i]<p[j]){
+			if(arr[i]>p[j]) {
+				j++;
 				break;
 			}
 		}
-		for(int l=j+1; l<k-1; l++) {
-			p[l+1] = p[l];
+		for(int l=k-1; l>j; l--) {
+			p[l] = p[l-1];
 		}
-		p[j+1] = arr[i];
+		p[j] = arr[i];
 	}
 
+	// k element
 	return p[k-1];
 }
 
@@ -102,10 +126,10 @@ int main() {
 	
 	sort(input_data, n);
 
+	//bubble_sort_large_to_small(input_data, 100);
 	printf("after sort\n");
 	show(input_data, n);
 	printf("%dth element is %d\n", m, input_data[m-1]);
-
 
 	return 0;
 }

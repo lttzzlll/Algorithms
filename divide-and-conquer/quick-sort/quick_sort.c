@@ -13,41 +13,60 @@ void swap(int *a, int *b) {
 	*b = t;
 }
 
+int find_middle_element(int *arr, int left, int right) {
+	// just for easy
+	return arr[left];
+}
 // quick sort define 
 void quick_sort(int *arr, int left, int right) {
-	// element < 3 count 
-	int i, j;
-	if ( left + 2 >= right) {
-		for(i=left; i<=right; i++) {
-			for(j=i+1; j<=right; j++) {
-				if(arr[i]>arr[j]) {
-					swap(&arr[i], &arr[j]);
-				}
-			}
-		}
+	if(left>=right) {
 		return ;
 	}
-	int pivot = arr[left];
+	int i, j, v;
+	v = arr[left];
 	i = left+1;
 	j = right;
 
-	while(i!=j) {
-		while(i!=j && arr[i] <= pivot) {
+	for(;;) {
+		while(arr[i]<v) {
 			i++;
 		}
-		while(i!=j && arr[j] > pivot) {
+		while(arr[j]>v) {
 			j--;
 		}
-		if(i!=j) {
+		if(i<j) {
 			swap(&arr[i], &arr[j]);
+			i++;
+			j--;
+		}else{
+			break;
 		}
 	}
-	swap(&arr[left], &arr[i-1]);
-
-	quick_sort(arr, left, i-1);
-	quick_sort(arr, i, right);
+	swap(&arr[left], &arr[j]);
+	quick_sort(arr, left, j-1);
+	quick_sort(arr, j+1, right);
 }
 
+void random_unique(int *arr, int n) {
+	srand((unsigned)time(NULL));
+	for(int i=0; i<n; i++) {
+		for(int j;j!=i;) {
+			arr[i] = rand() % 10000;
+			for(j=0; j<i; j++) {
+				if(arr[i] == arr[j]) {
+					break;
+				}
+			}
+		}
+	}
+}
+
+void random_range(int *arr, int n, int range) {
+	srand((unsigned)time(NULL));
+	for(int i=0; i<n; i++) {
+		arr[i] = rand()  % range;
+	}
+}
 // display a array
 void show(int *arr, int end, int start) {
 	for(int i=start; i<=end; i++) {
@@ -57,11 +76,8 @@ void show(int *arr, int end, int start) {
 }
 
 int main() {
-	srand((unsigned)time(NULL));
-	for(int i=0; i<100;i++) {
-		input_data[i] =rand() % 100;
-	}
-
+	//random_unique(input_data, 100);
+	random_range(input_data, 100, 100);
 	printf("origin array\n");
 	show(input_data, 99, 0);
 
