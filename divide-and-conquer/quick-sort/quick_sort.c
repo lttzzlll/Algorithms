@@ -13,17 +13,33 @@ void swap(int *a, int *b) {
 	*b = t;
 }
 
-int find_middle_element(int *arr, int left, int right) {
-	// just for easy
-	return arr[left];
+int find_middle_element_return_index(int *arr, int left, int right) {
+	if(left+2>right) {
+		return left;
+	}
+	int middle = (right-left)/2 + left;
+	if(arr[middle] >= arr[left] && arr[middle] <= arr[right]) {
+		return middle;
+	}else if( arr[left] >= arr[middle] && arr[left] <= arr[right]) {
+		return left;
+	}else {
+		return right;
+	}
 }
+
 // quick sort define 
 void quick_sort(int *arr, int left, int right) {
 	if(left>=right) {
 		return ;
 	}
-	int i, j, v;
+	int i, j, v, pivot;
+	/*
 	v = arr[left];
+	*/
+	pivot = find_middle_element_return_index(arr, left, right);
+	v = arr[pivot];
+	swap(&arr[left], &arr[pivot]);
+	
 	i = left+1;
 	j = right;
 
@@ -76,8 +92,13 @@ void show(int *arr, int end, int start) {
 }
 
 int main() {
-	//random_unique(input_data, 100);
-	random_range(input_data, 100, 100);
+	int select = 0;
+	if(select) {
+		random_unique(input_data, 100);
+	}else {
+		random_range(input_data, 100, 100);
+	}
+
 	printf("origin array\n");
 	show(input_data, 99, 0);
 
