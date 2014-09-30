@@ -13,4 +13,7 @@ include {
 	hanoi
 	find maximum subarray
 	permutation
+	find k element 
+	system transcation
+	find main element 
 }
