@@ -1,10 +1,12 @@
-// distist point pair 
+// distist point pair using binary divide and conquer
 #include<stdio.h>
 #include<stdlib.h>
 #include<time.h>
 #include<math.h>
 
 int input_data[100][2];
+int tmp_p[100][2];
+int tmp_q[100][2];
 
 int cmp(const void *a, const void *b) {
 	int *p = (int*)a;
@@ -16,8 +18,35 @@ int cmp(const void *a, const void *b) {
 	}
 }
 
+int cmp_x(const void *a, const void *b) {
+	int *p = (int *)a;
+	int *q = (int *)q;
+	return p[0] - q[0];
+}
+
+int cmp_y(const void *a, const void *b) {
+	int *p = (int *)a;
+	int *q = (int *)b;
+	return p[0] - q[0];
+}
+
 void sort(int arr[][2], int n) {
 	qsort(arr, n, sizeof(arr[1]), cmp);
+}
+
+void sort_by_x(int arr[][2], int n) {
+	qsort(arr, n, sizeof(arr[1]), cmp_x);
+}
+
+void sort_by_y(int arr[][2], int n) {
+	qsort(arr, n, sizeof(arr[1]), cmp_y);
+}
+
+void copy_2(int des[][2], int src[][2], int left, int right) {
+	for(int i=left; i<=right; i++) {
+		des[i][0] = src[i][0];
+		des[i][1] = src[i][1];
+	}
 }
 
 void random_range(int arr[][2], int n, int xlimit, int ylimit) {
@@ -75,6 +104,13 @@ double find_closet_point_pair(int arr[][2], int a[], int b[], int n) {
 	return closet;
 }
 
+// this is the key point in the code
+double find_closet_point_pair_2(int arr[][2], int a[], int b[], int n) {
+	// test
+	return 0;
+
+}
+
 int main() {
 	int n = 100, select, xlimit, ylimit;
 	select = 0;
@@ -90,7 +126,7 @@ int main() {
 	int a[2], b[2];
 	double closet;
 	
-	closet = find_closet_point_pair(input_data, a, b, n);
+//	closet = find_closet_point_pair(input_data, a, b, n);
 
 	printf("closet dist is %lf, points is (%d, %d) and (%d, %d) \n", closet, a[0], a[1], b[0], b[1]);
 
