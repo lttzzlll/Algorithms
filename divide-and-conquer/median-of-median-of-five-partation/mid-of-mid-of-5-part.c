@@ -90,11 +90,13 @@ int median_of_5_sort(int *arr, int left, int right) {
 }
 
 int find_k_element(int *arr,int left, int right, int k) {
+	return -1;
 	if(left+4>right) {
 		bubble_sort(arr, left, right);
 		return arr[k-1];
 	}
-	if(left+
+	// note:: later do 
+	//if(left+
 }
 
 int main() {

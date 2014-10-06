@@ -10,6 +10,11 @@ int input_data[100];
 int cnt = 0;
 
 
+int randomize(int down, int up) {
+	srand((unsigned)time(NULL));
+	return down + rand() % (up - down + 1);
+}
+
 void show(int *arr, int left, int right) {
 	printf("before display the array\n");
 	for(int i=left; i<=right; i++) {
@@ -68,7 +73,7 @@ int find_perpor_pivot_return_index(int *arr, int left, int right) {
 
 int search_k_element(int *arr, int left, int right, int k) {
 	if(left==right) {
-		if(left==right) {
+		if(left==k) {
 			return arr[left];
 		}else {
 			printf("error\n");

@@ -6,15 +6,30 @@
 
 int input_data[100];
 
+const int minimum_limit = 75;;
+
 /* cnt global var define here for search count */
 int cnt = 0;
 
-// random generate a integer between down and up  include down, up
+void bubble_sort(int *arr, int left, int right);
+
+int cmp(const void *a, const void *b) {
+	return *(int *)a - *(int *)b;
+}
+
+// use multiply sort methods
+void sort(int *arr, int left, int right, int option) {
+	if(option == 0) {
+		qsort(arr, right-left+1, sizeof(arr[left]), cmp);
+	}else {
+		bubble_sort(arr, left, right);
+	}
+}
+
 int randomize(int down, int up) {
 	srand((unsigned)time(NULL));
 	return down + rand() % (up - down + 1);
 }
-
 
 void show(int *arr, int left, int right) {
 	printf("before display the array\n");
@@ -58,6 +73,7 @@ void random_unique(int *arr, int n, int limit) {
 	}
 }
 
+//	in a view , this is a good idea to find a item
 int find_perpor_pivot_return_index(int *arr, int left, int right) {
 	if(left+1>=right) {
 		return left;
@@ -66,18 +82,19 @@ int find_perpor_pivot_return_index(int *arr, int left, int right) {
 	if(arr[middle] >= arr[left] && arr[middle] <= arr[right]) {
 		return middle;
 	}else if(arr[left] >= arr[middle] && arr[left] <= arr[right]) {
-		return right;
+		return left;
 	}else {
 		return right;
 	}
 }
 
-void search_k_element(int *arr, int left, int right, int k) {
+// will modify
+int search_k_element(int *arr, int left, int right, int k) {
 	if(left==right) {
-		if(left==k) {
-			return ;
+		if(k==1) {
+			return arr[left];
 		}else {
-			printf("error\n");
+			printf("left is %d right is %d, k is %d ###error\n", left, right, k);
 			exit(-1);
 		}
 	}
@@ -85,12 +102,10 @@ void search_k_element(int *arr, int left, int right, int k) {
 	int v, i, j, pivot;
 	
 	/* will be modify later */
-	// note: now to modify here
-	//v = arr[left];
 	pivot = randomize(left, right);
 	v = arr[pivot];
 	swap(&arr[pivot], &arr[left]);
-	
+
 	i = left + 1;
 	j = right;
 
@@ -110,19 +125,14 @@ void search_k_element(int *arr, int left, int right, int k) {
 		}
 	}
 	swap(&arr[j], &arr[left]);
-
-	// note : see this print will show you how quick it select from the array
-	// sometime it can compare will binary search if the pivot select very well
 	printf("in search %d times\n", cnt++);
-	// end 
-	
 	if(k <= j-left) {
-		search_k_element(arr, left, j-1, k);
+		return search_k_element(arr, left, j-1, k);
 	}else if(k==j-left+1) {
 		// problem occurs here
-		return ;
+		return arr[left+k-1];
 	}else {
-		search_k_element(arr, j+1, right, k-(j-left)-1);
+		return search_k_element(arr, j+1, right, k-(j-left)-1);
 	}
 }
 
@@ -133,10 +143,79 @@ void random_range(int *arr, int n, int min_limit) {
 	}
 }
 
+//
+int partationing(int *arr, int left, int right, int partation) {
+	if(left == right) {
+		return left;
+	}
+	
+	int i, j, pivot;
+
+	// find the position of partation
+	for(i=left; i<=right; i++) {
+		if(arr[i] == partation) {
+			pivot = i;
+			break;
+		}
+	}
+
+	//swap(&arr[left], &arr[pivot]);
+
+	i = left;
+	j = right;
+
+	for(;;) {
+		while(arr[i] <= partation) {
+			i++;
+		}
+		while(arr[i] > partation) {
+			j--;
+		}
+		if(i<j) {
+			swap(&arr[i], &arr[j]);
+			i++;
+			j--;
+		}else {
+			break;
+		}
+	}
+
+	swap(&arr[pivot], &arr[j]);	
+
+	return j;
+}
+
+// quick sort
+int quick_select(int *arr, int left, int right, int k) {
+	if(right - left < minimum_limit) {
+		sort(arr, left, right, 1);
+		return arr[left + k - 1];
+	}
+	
+	int i, j, x;
+
+	for(i=0; i<=(right-left-4)/5; i++) {
+		sort(arr, left+5*i, left+5*i+4, 0);
+		swap(&arr[left+5*i+2], &arr[left+i]);
+	}
+	
+	x = quick_select(arr, left, left+(right-left-4)/5, (right-left-4)/10);
+
+	i = partationing(arr, left, right, x);
+	j = i - left + 1;
+
+	if(k <= j) {
+		return quick_select(arr, left, i, k);
+	}else {
+		return quick_select(arr, i+1, right, k-j);
+	}
+}
+
+
 int main() {
 
 	int select, n, up_limit, min_limit, m;
-	select = 1;
+	select = 0;
 	n = 100;
 	up_limit = n*100;
 	min_limit = n; 
@@ -150,15 +229,16 @@ int main() {
 
 	printf("enter a number between %d to %d: ", 1, n);
 	scanf("%d", &m);
-	if( m < 0 ||  m > n) {
+	if( m < 1 ||  m > n) {
 		printf("enter error!\n");
 		return -1;
 	}
 
 	// k is the result
-	search_k_element(input_data, 0, n-1, m);
+//	int k = search_k_element(input_data, 0, n-1, m);
+    int k = quick_select(input_data, 0, n-1, m);
 	
-	printf("%dth element is %d\n", m, input_data[m-1]);
+	printf("%dth element is %d\n", m, k);
 
 	// for check
 	bubble_sort(input_data, 0, n-1);
