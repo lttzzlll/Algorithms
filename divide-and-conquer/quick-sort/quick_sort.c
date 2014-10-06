@@ -5,6 +5,11 @@
 
 int input_data[100];
 
+int randomize(int down, int up) {
+	srand((unsigned)time(NULL));
+	return down + rand() % (up - down + 1);
+}
+
 void show(int *arr, int end, int start);
 
 void swap(int *a, int *b) {
@@ -36,7 +41,9 @@ void quick_sort(int *arr, int left, int right) {
 	/*
 	v = arr[left];
 	*/
-	pivot = find_middle_element_return_index(arr, left, right);
+	//pivot = find_middle_element_return_index(arr, left, right);
+	//use randomize to generate a index as pivot
+	pivot = randomize(left, right);
 	v = arr[pivot];
 	swap(&arr[left], &arr[pivot]);
 	
