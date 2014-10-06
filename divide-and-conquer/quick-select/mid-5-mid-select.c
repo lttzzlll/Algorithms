@@ -159,16 +159,16 @@ int partationing(int *arr, int left, int right, int partation) {
 		}
 	}
 
-	//swap(&arr[left], &arr[pivot]);
 
 	i = left;
 	j = right;
 
+//	printf("in partationing before partate\n");
 	for(;;) {
 		while(arr[i] <= partation) {
 			i++;
 		}
-		while(arr[i] > partation) {
+		while(arr[j] > partation) {
 			j--;
 		}
 		if(i<j) {
@@ -179,7 +179,7 @@ int partationing(int *arr, int left, int right, int partation) {
 			break;
 		}
 	}
-
+//	printf(" in partationing after partation\n");
 	swap(&arr[pivot], &arr[j]);	
 
 	return j;
@@ -201,7 +201,9 @@ int quick_select(int *arr, int left, int right, int k) {
 	
 	x = quick_select(arr, left, left+(right-left-4)/5, (right-left-4)/10);
 
+//	printf("before partatioing\n");
 	i = partationing(arr, left, right, x);
+//	printf("after partatioing\n");
 	j = i - left + 1;
 
 	if(k <= j) {
