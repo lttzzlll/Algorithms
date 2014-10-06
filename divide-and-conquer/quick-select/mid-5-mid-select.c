@@ -187,6 +187,7 @@ int partationing(int *arr, int left, int right, int partation) {
 
 // quick sort
 int quick_select(int *arr, int left, int right, int k) {
+	// 小范围内 直接排序解决更便捷
 	if(right - left < minimum_limit) {
 		sort(arr, left, right, 1);
 		return arr[left + k - 1];
@@ -195,15 +196,19 @@ int quick_select(int *arr, int left, int right, int k) {
 	int i, j, x;
 
 	for(i=0; i<=(right-left-4)/5; i++) {
+		// sort each 5-tuple
 		sort(arr, left+5*i, left+5*i+4, 0);
+		// set each median number in the front 
 		swap(&arr[left+5*i+2], &arr[left+i]);
 	}
 	
+	// the front (right - left - 4)/5 median elements  the median of median elements
 	x = quick_select(arr, left, left+(right-left-4)/5, (right-left-4)/10);
 
 //	printf("before partatioing\n");
 	i = partationing(arr, left, right, x);
 //	printf("after partatioing\n");
+//	the left number of those elements lower than median of median elements
 	j = i - left + 1;
 
 	if(k <= j) {
