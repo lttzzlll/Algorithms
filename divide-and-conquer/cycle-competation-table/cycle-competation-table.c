@@ -2,9 +2,10 @@
 #include<stdio.h>
 #include<stdlib.h>
 
-int a[65][65];
+#define N 1025
+int a[N][N];
 
-void cycle(int k, int a[][65]) {
+void cycle(int k, int a[][N]) {
 	int n = 1;
 
 	for(int i=1; i<=k; i++) { n *= 2; }
@@ -29,7 +30,7 @@ void cycle(int k, int a[][65]) {
 
 // failed
 // now succeed : the reason is that the martrix is [symmetrical]
-void cycle2(int k, int a[][65]) {
+void cycle2(int k, int a[][N]) {
 	int n = 1;
 
 	// n is the population of the objects
@@ -73,12 +74,12 @@ void cycle2(int k, int a[][65]) {
 	}
 }
 
-void display(int arr[][65], int k) {
+void display(int arr[][N], int k) {
 	int n = 1;
 	for(int i=1; i<=k; i++) { n *= 2; }
 	for(int i=1; i<=n; i++) {
 		for(int j=1; j<=n; j++) {
-			printf("%d ", arr[i][j]);
+			printf("%2d ", arr[i][j]);
 		}
 		printf("\n");
 	}
@@ -88,7 +89,7 @@ int main() {
 	int k = 3;
 	printf("enter k===> n=2**k: ");
 	scanf("%d", &k);
-	if(k>4 || k<0) {
+	if(k>10 || k<0) {
 		printf("k(%d) is too big or too small\n", k);
 		exit(-1);
 	}
