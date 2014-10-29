@@ -8,6 +8,89 @@
 // the	numofcounts limits 
 #define SIZE 101
 
+
+void swap(int *a, int *b) {
+	int tmp = *a;
+	*a = *b;
+	*b = tmp;
+}
+
+
+// insertion sort definition
+void insertion_sort(int *arr, int start, int end) {
+	int i, j, key;
+	for(i=start+1; i<=end; i++) {
+		key = arr[i];
+		for(j=i-1; j>=start && arr[j] > key; j--) {
+			arr[j+1] = arr[j];
+		}
+		arr[j+1] = key;
+	}
+}
+
+// forever things is
+// bubble sort definition
+void bubble_sort(int *arr, int start, int end) {
+	int i, j;
+	for(i=start; i<end; i++) {
+		for(j=start; j<=end-i; j++) {
+			if(arr[j] > arr[j+1]) {
+				swap(&arr[j], &arr[j+1]);
+			}
+		}
+	}
+}
+
+// improve the origin sort method
+void bubble_sort2(int *arr, int start, int end) {
+	int i, j, k, flag;
+	k = end;
+	flag = 1;
+	while(flag) {
+		flag = 0;
+		for(i=start; i<k; i++) {
+			if(arr[i] > arr[i+1]) {
+				swap(&arr[i], &arr[i+1]);
+				flag = 1;
+			}
+		}
+		k--;
+	}
+}
+
+// a better way
+// exchange the adjacency elements
+void bubble_sort_4(int *arr, int start, int end) {
+	int i, k, flag;
+	flag = end;
+	while(flag) {
+		k = flag;
+		flag = 0;
+		for(i=start; i<k; i++) {
+			if(arr[i] > arr[i+1]) {
+				swap(&arr[i], &arr[i+1]);
+				flag = i;
+			}
+		}
+	}
+}
+
+void bubble_sort3(int *arr, int start, int end) {
+	int i, j, flag;
+	flag = 0;
+	for(i=start; i<end; i++) {
+		if(flag) { break; }
+		flag = 1;
+		for(j=start; j<=end-i; j++) {
+			if(arr[j] > arr[j+1]) {
+				swap(&arr[j], &arr[j+1]);
+				flag = 0;
+			}
+		}
+	}
+}
+
+
 void random_range(int *arr, int l, int r, int limit) {
     srand((unsigned)time(NULL));
     for(int i=l; i<=r; i++) {
@@ -149,7 +232,7 @@ int main() {
 	int arr[SIZE];
 	int d = 3;
 	int k;
-	n = 20;
+	int n = 20;
 	int limits = 1000;
 	int offset = 100;
 	
@@ -158,7 +241,9 @@ int main() {
 
 	// needs: array, start, end, digits numbers
 	// each element is the same digit numbers
-	radix_sort(arr, 1, n, d);
+	//radix_sort(arr, 1, n, d);
+	//insertion_sort(arr, 1, n);
+	bubble_sort_4(arr, 1, n);
 
 	display(arr, 1, n);
 
