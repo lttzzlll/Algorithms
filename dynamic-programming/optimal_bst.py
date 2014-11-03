@@ -63,6 +63,31 @@ def mid_visit_tree(root, i, j):
 		# right sub tree
 		mid_visit_tree(root, i+1, j)
 		
+def tree_visit(root, i, j, n):
+	''' middle visiting a binary search tree '''
+
+	# out of border
+	if i < 1:
+		return
+	if j > n:
+		return 
+	# in the proper range
+	if i <= j:
+		# the [root]
+		if i == 1 and j == n:
+			print 'K[%d] is root ' % root[i][j]
+		# the left child
+		#tree_visit(root, i-1, j, n)
+		if root[i][j] != root[i][j-1]:
+			print 'K[%d] is K[%d] left child' % (root[i][j-1], root[i][j])
+		tree_visit(root, i-1, j, n)
+		# the right child
+		#tree_visit(root, i, j+1, n)
+		if root[i][j] != root[i+1][j]:
+			print 'K[%d] is K[%d] right child' %(root[i+1][j], root[i][j])
+		tree_visit(root, i, j+1, n)
+
+
 
 if __name__ == '__main__':
 	''' test block '''
@@ -99,7 +124,9 @@ if __name__ == '__main__':
 
 	print '================constructing the bst==========='
 	#construct_optimal_bst(r)
-	mid_visit_tree(r, 1, 5)
+	#mid_visit_tree(r, 1, 5)
+	tree_visit(r, 1, 5, 5)
 	print '================end constructing =============='
 
 	print 'countTime is %d' % countTimes
+
