@@ -91,5 +91,8 @@ int main() {
 	printf("linklist ll had destoied!\n");
 	printf("%d\n", LinkListSize(&ll));
 
+	printf("%d\n", LinkListSize(&ll));
+	printf("%d\n", isLinkListHead(&ll, tempNode));
+	printf("%d\n", isLinkListTail(&ll, tempNode));
 	return 0;
 }
