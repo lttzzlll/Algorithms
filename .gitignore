@@ -45,6 +45,7 @@ docs/_build/
 
 # about c files and output
 a.out
+*.out
 
 #tmp files
 .*.swp
