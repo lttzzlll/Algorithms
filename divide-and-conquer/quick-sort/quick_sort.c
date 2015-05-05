@@ -51,6 +51,8 @@ void quick_sort(int *arr, int left, int right) {
 	j = right;
 
 	for(;;) {
+		// the bad code!!
+		// cause IndexOutoutRange
 		while(arr[i]<v) {
 			i++;
 		}
