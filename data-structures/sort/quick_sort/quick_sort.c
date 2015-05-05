@@ -39,15 +39,40 @@ int partation(int *arr, int left, int right) {
 }
 
 void qSort(int *arr, int left, int right) {
+	int i, j, pivot, v;
 	if (left  >= right) {  // only just one element
 		return ; 
 	}
 		
-	int pos = partation(arr, left, right);
-	qSort(arr, left, pos - 1);
-	qSort(arr, pos + 1, right);
+	v = (random() % (right - left + 1)) + left;
+	pivot = arr[v];
+	swap2Ints(&arr[left], &arr[v]);
+	i = left + 1;
+	j = right;
+
+	for (;;) {
+		while (i <= right && arr[i] < pivot) {
+			i++;
+		}
+		while (j >= left && arr[j] > pivot) {
+			j--;
+		}
+		if (i < j) {
+			swap2Ints(&arr[i], &arr[j]);
+			i++;
+			j--;
+		}else {
+//			printf("i==%d, j==%d i - j == %d\n", i, j, i - j); // i - j == 1, or 0
+			break;
+		}
+	}
+
+	swap2Ints(&arr[left], &arr[j]);
+	qSort(arr, left, j - 1);
+	qSort(arr, j + 1, right);
 }
 
+// the bad code sample!!
 void qSort1(int *arr, int left, int right) {
 	int i, j, v, pivot;
 	if (left >= right) {
@@ -60,7 +85,8 @@ void qSort1(int *arr, int left, int right) {
 	i = left + 1;
 	j = right;
 
-	for (;i <= j;) {
+	for (;i <= j;) { // error in here: IndexOutoutRange
+					// i > right ??
 		while (arr[i] < pivot) {
 			i++;
 		}
@@ -84,7 +110,7 @@ void qSort1(int *arr, int left, int right) {
 }
 
 void quick_sort(int *arr, int n) {
-	qSort1(arr, 0, n - 1);	
+	qSort(arr, 0, n - 1);	
 }
 
 void sort(int *arr, int n) {
