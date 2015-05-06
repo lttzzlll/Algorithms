@@ -12,7 +12,7 @@ void swap2Ints(int *num1, int *num2) {
 // :worst time-consuming: O(n*2)
 // :best time-consuming: O(n)
 // :stability: stabile
-// :space-consuming: O(n)
+// :extra space-consuming: O(1)
 // :apply: n is samll
 // :description: select a biggest element each time and put it at the 'last position'
 void bubble_sort(int *arr, int n) {

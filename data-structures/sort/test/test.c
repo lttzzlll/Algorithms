@@ -4,6 +4,24 @@
 #include <stdlib.h>
 #include <time.h>
 
+// each element is different with others
+void generateUniqueData(int *arr, int n, int limitation) {
+	srand((unsigned)time(NULL));
+	for (int i=0; i<n; i++) {
+		for (int j;;) {
+			arr[i] = rand() % (limitation + 1);
+			for (j=0; j<i; j++) {
+				if (arr[j] == arr[i]) {
+					break;
+				}
+			}
+			if (j == i) {
+				break;
+			}
+		}
+	}
+}
+
 void generateData(int *arr, int n, int limitation) {
 	srand((unsigned)time(NULL));
 	for (int i=0; i<n; i++) {
@@ -44,7 +62,8 @@ void test(int n, int limitation, void (*sort)(int *arr, int n)) {
 		exit(-1);
 	}
 
-	generateData(p, n, limitation);
+	//generateData(p, n, limitation);
+	generateUniqueData(p, n, limitation);
 
 	copyFromArrayTo(p + n, p, n);
 
