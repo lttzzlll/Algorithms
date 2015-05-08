@@ -28,7 +28,7 @@ void merge(int *arr, int left, int mid, int right) {
 	
 	for (;;) {
 		// there is the complex place, but it is easy to comprehensioned
-		while (i <= mid && j <= right && arr[i] <= arr[j]) {
+		while (i <= mid && arr[i] <= arr[j]) {
 			pArr[pos++] = arr[i++];
 		}
 
@@ -39,7 +39,7 @@ void merge(int *arr, int left, int mid, int right) {
 			break;
 		}
 
-		while (i <= mid && j <= right && arr[j] <= arr[i]) {
+		while (j <= right && arr[j] <= arr[i]) {
 			pArr[pos++] = arr[j++];
 		}
 
@@ -88,8 +88,12 @@ void merge_sort_withSpace(int *arr, int n) {
 	free(additionalArray);
 }
 
+void mergeSort_withoutRecursion(int *arr, int n) {
+}
+
 // top level invoke
 void sort(int *arr, int n) {
 //	merge_sort(arr, n);
-	merge_sort_withSpace(arr, n);
+    merge_sort_withSpace(arr, n);
+//	merge_sort_withoutRecursion(arr, n);
 }
