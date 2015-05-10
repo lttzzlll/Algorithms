@@ -3,4 +3,6 @@
 
 void sort(int *arr, int n);
 
+void merge_sort(int *arr, int n);
+
 #endif
