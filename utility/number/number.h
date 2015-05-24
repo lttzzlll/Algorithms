@@ -19,5 +19,7 @@ void integerArrayCopyFrom(int *src, int *des, int n);
 // integer array compare
 int integerArrayCompare(int *lhs, int *rhs, int n);
 
+// compare function of integer
+int integerCompare(const void *a, const void *b);
 
 #endif

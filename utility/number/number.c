@@ -1,4 +1,5 @@
 #include "number.h"
+#include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
 
@@ -16,7 +17,7 @@ void generateUniqueInteger(int *arr, int counts, int limitation) {
         srand((unsigned)time(NULL));
         for (int i=0; i<counts; i++) {
             for (int j;;) {
-                arr[i] = rand() % limitation);
+                arr[i] = rand() % limitation;
                 for (j=0; j<i; j++) {
                     if (arr[j] == arr[i]) {
                         break;
@@ -31,7 +32,7 @@ void generateUniqueInteger(int *arr, int counts, int limitation) {
 }
 
 void integerArraySnippetPrint(int *arr, int left, int right) {
-    for (int = left; i<= right; i++) {
+    for (int i = left; i<= right; i++) {
         printf("%d ", arr[i]);
     }
     printf("\n");
@@ -39,7 +40,7 @@ void integerArraySnippetPrint(int *arr, int left, int right) {
 
 
 void integerArrayPrint(int *arr, int n) {
-    snippetArrayPrint(arr, 0, n-1);
+    integerArraySnippetPrint(arr, 0, n-1);
 }
 
 
@@ -56,4 +57,8 @@ int integerArrayCompare(int *lhs, int *rhs, int n) {
         }
     }
     return 0;
+}
+
+int integerCompare(const void *a, const void *b) {
+    return *(int *)a  - *(int *)b;
 }
