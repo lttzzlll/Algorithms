@@ -62,3 +62,21 @@ int integerArrayCompare(int *lhs, int *rhs, int n) {
 int integerCompare(const void *a, const void *b) {
     return *(int *)a  - *(int *)b;
 }
+
+void swap2Ints(int *a, int *b) {
+    int temp = *a;
+    *a = *b;
+    *b = temp;
+}
+
+void swap2Floats(float *a, float *b) {
+    float temp = *a;
+    *a = *b;
+    *b = temp;
+}
+
+void swap2Doubles(double *a, double *b) {
+    double temp = *a;
+    *a = *b;
+    *b = temp;
+}

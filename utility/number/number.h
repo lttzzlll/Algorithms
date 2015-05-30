@@ -22,4 +22,13 @@ int integerArrayCompare(int *lhs, int *rhs, int n);
 // compare function of integer
 int integerCompare(const void *a, const void *b);
 
+// swap 2 integers
+void swap2Ints(int *a, int *b);
+
+// swap 2 floats
+void swap2Floats(float *a, float *b);
+
+// swap 2 doubles
+void swap2Doubles(double *a, double *b);
+
 #endif
