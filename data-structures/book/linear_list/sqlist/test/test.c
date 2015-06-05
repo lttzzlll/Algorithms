@@ -1,8 +1,6 @@
-#include "../../../../utility/number/number.h"
-#include "../../../../utility/type/type.h"
-//#include "../../../sort/test/test.h"
-//#include "../../introduction/bubble_sort/bubble_sort.h"
-#include "sqlist.h"
+#include "../../../../../utility/number/number.h"
+#include "../../../../../utility/type/type.h"
+#include "../list/list.h"
 #include <stdio.h>
 
 #define SIZE 1000
@@ -11,13 +9,13 @@ int array[SIZE];
 int array_another[SIZE]; // copy for the list [merge, union] operation
 
 // sqeuece list visit
-Status ListVisit_Sq(ElemType e) {
+Status ListVisit(ElemType e) {
     printf("%d  ", (int)e);
     return OK;
 }
 
 //sequence list compare
-Bool ListCompare_Sq(ElemType e1, ElemType e2) {
+Bool ListCompare(ElemType e1, ElemType e2) {
     if (e1 == e2) {
         return True;
     }else {
@@ -26,8 +24,8 @@ Bool ListCompare_Sq(ElemType e1, ElemType e2) {
 }
 
 // traverse a list and print each element if it can
-void ListTraversePrint_Sq(Sqlist *L, Status (*visit)(ElemType e)) {
-    ListTraverse_Sq(L, visit);
+void ListTraversePrint(List *L, Status (*visit)(ElemType e)) {
+    ListTraverse(L, visit);
     printf("\n");
 }
 
@@ -62,35 +60,35 @@ int main(int argc, char *argv[]) {
     // List Declaration
     //
     //
-    Sqlist list;
-    Sqlist list_other; // copy for the list [merge, union] operation
-    Sqlist list_another; // copy for the list [merge, union] operation
+    List list;
+    List list_other; // copy for the list [merge, union] operation
+    List list_another; // copy for the list [merge, union] operation
     
     // InitList
     //
     //
-    InitList_Sq(&list); // @1 initilize the sequence list
+    InitList(&list); // @1 initilize the sequence list
     
-    InitList_Sq(&list_other); // copy for the list [merge, union] operation
+    InitList(&list_other); // copy for the list [merge, union] operation
 
-    InitList_Sq(&list_another); // copy for the list [merge, union] operation
+    InitList(&list_another); // copy for the list [merge, union] operation
     
     // ListEmpty
     //
     //
-    if (ListEmpty_Sq(&list)) { // judge if the sequence list is empty
+    if (ListEmpty(&list)) { // judge if the sequence list is empty
         printf("list is empty\n");
     }else {
         printf("list is not empty\n");
     }
     
-    if (ListEmpty_Sq(&list_other)) { // judge if the sequence list is empty
+    if (ListEmpty(&list_other)) { // judge if the sequence list is empty
         printf("list other is empty\n");
     }else {
         printf("list other is not empty\n");
     }
     
-    if (ListEmpty_Sq(&list_another)) { // judge if the sequence list is empty
+    if (ListEmpty(&list_another)) { // judge if the sequence list is empty
         printf("list another is empty\n");
     }else {
         printf("list another is not empty\n");
@@ -99,60 +97,60 @@ int main(int argc, char *argv[]) {
     // ListLength
     //
     //
-    printf("list length: %d\n", ListLength_Sq(&list)); // get the list length
-    printf("list other length: %d\n", ListLength_Sq(&list_other)); // get the list length
-    printf("list anoter length: %d\n", ListLength_Sq(&list_another)); // get the list length
+    printf("list length: %d\n", ListLength(&list)); // get the list length
+    printf("list other length: %d\n", ListLength(&list_other)); // get the list length
+    printf("list anoter length: %d\n", ListLength(&list_another)); // get the list length
     
     // ListInsert
     //
     //
     for (int i=0; i < n; i++) { // insert each element into the list
-        ListInsert_Sq(&list, ListLength_Sq(&list)+1, (ElemType)array[i]);
+        ListInsert(&list, ListLength(&list)+1, (ElemType)array[i]);
     }
   
     // list other
     for (int i=0; i < n; i++) { // insert each element into the list
-        ListInsert_Sq(&list_other, ListLength_Sq(&list_other)+1, (ElemType)array_another[i]);
+        ListInsert(&list_other, ListLength(&list_other)+1, (ElemType)array_another[i]);
     }
     
     
     // ListLength
     //
     //
-    printf("list length: %d\n", ListLength_Sq(&list)); // get the list length
+    printf("list length: %d\n", ListLength(&list)); // get the list length
    
-    printf("list other length: %d\n", ListLength_Sq(&list_other)); // get the list length
+    printf("list other length: %d\n", ListLength(&list_other)); // get the list length
     
     // ListTraversePrint
     // ListTraverse
     // ListVisit
-    ListTraversePrint_Sq(&list, ListVisit_Sq); // traverse the list and print each elemnt
+    ListTraversePrint(&list, ListVisit); // traverse the list and print each elemnt
     
-    ListTraversePrint_Sq(&list_other, ListVisit_Sq);
+    ListTraversePrint(&list_other, ListVisit);
     
     
     // MergeList
     //
     //
-    MergeList_Sq(&list, &list_other, &list_another);
+    MergeList(&list, &list_other, &list_another);
     // ListLength
     //
     //
-    printf("list another length: %d\n", ListLength_Sq(&list_another)); // get the list length
+    printf("list another length: %d\n", ListLength(&list_another)); // get the list length
    
     
     // ListTraversePrint
     // ListTraverse
     // ListVist
-    ListTraversePrint_Sq(&list_another, ListVisit_Sq);
+    ListTraversePrint(&list_another, ListVisit);
     
     // GetElem
     // PriorElem
     // NextElem
     ElemType e, cur_e, pre_e, next_e;    
     for (int i = 1; i <= n; i++) {
-        if (GetElem_Sq(&list, i, &cur_e) == OK) { // obtain the element at the position of i in the list
-            if (PriorElem_Sq(&list, cur_e, &pre_e, ListCompare_Sq) == OK) { // get the previous element of the current element if it exist in the list
+        if (GetElem(&list, i, &cur_e) == OK) { // obtain the element at the position of i in the list
+            if (PriorElem(&list, cur_e, &pre_e, ListCompare) == OK) { // get the previous element of the current element if it exist in the list
                 printf("%d element is %d, the previous element is %d\n", i, (int)cur_e, (int)pre_e);
             }else {
                 printf("%d element is %d, did not has a previous element\n", i, (int)cur_e);
@@ -163,8 +161,8 @@ int main(int argc, char *argv[]) {
     }
     
     for (int i=1; i <=n; i++) {
-        if (GetElem_Sq(&list, i, &cur_e) == OK) {
-            if (NextElem_Sq(&list, cur_e, &next_e, ListCompare_Sq) == OK) { //obtain the next elemnt of the current element if it exist
+        if (GetElem(&list, i, &cur_e) == OK) {
+            if (NextElem(&list, cur_e, &next_e, ListCompare) == OK) { //obtain the next elemnt of the current element if it exist
                 printf("%d element is %d, the next element is %d\n", i, (int)cur_e, (int)next_e);
             }else {
                 printf("%d element is %d, did not has a next element\n", i, (int)cur_e);
@@ -179,27 +177,27 @@ int main(int argc, char *argv[]) {
     //
     //
     for (int i=1; i <= n; i++) {
-        if (ListDelete_Sq(&list, 1, &cur_e) == OK) {
-            ListTraversePrint_Sq(&list, ListVisit_Sq);
-            printf("list length is %d\n", ListLength_Sq(&list));
+        if (ListDelete(&list, 1, &cur_e) == OK) {
+            ListTraversePrint(&list, ListVisit);
+            printf("list length is %d\n", ListLength(&list));
         }else {
             printf("delete position %d element failed\n", i);
         }
     }
 //
 //    for (int i=1; i <= n; i++) {
-//        if (ListDelete_Sq(&list, ListLength_Sq(&list), &cur_e) == OK) {
-//            ListTraversePrint_Sq(&list, ListVisit_Sq);
-//            printf("list length is %d\n", ListLength_Sq(&list));
+//        if (ListDelete(&list, ListLength(&list), &cur_e) == OK) {
+//            ListTraversePrint(&list, ListVisit);
+//            printf("list length is %d\n", ListLength(&list));
 //        }else {
 //            printf("delete position %d element failed\n", i);
 //        }
 //    }
     
 //    for (int i=1; i <= n; i++) {
-//        if (ListDelete_Sq(&list, i, &cur_e) == OK) {
-//            ListTraversePrint_Sq(&list, ListVisit_Sq);
-//            printf("list length is %d\n", ListLength_Sq(&list));
+//        if (ListDelete(&list, i, &cur_e) == OK) {
+//            ListTraversePrint(&list, ListVisit);
+//            printf("list length is %d\n", ListLength(&list));
 //        }else {
 //            printf("delete position %d element failed\n", i);
 //        }
@@ -209,7 +207,7 @@ int main(int argc, char *argv[]) {
     // ListEmpty
     //
     //
-    if (ListEmpty_Sq(&list)) {
+    if (ListEmpty(&list)) {
         printf("list is empty\n");
     }else {
         printf("list is not empty\n");
@@ -218,27 +216,27 @@ int main(int argc, char *argv[]) {
     // ClearList
     //
     //
-    ClearList_Sq(&list); // clear the list
+    ClearList(&list); // clear the list
     
     // ListEmpty
     //
     //
-    if (ListEmpty_Sq(&list)) {
+    if (ListEmpty(&list)) {
         printf("list is empty\n");
     }else {
         printf("list is not empty\n");
     }
     
-    printf("list length is %d\n", ListLength_Sq(&list));
+    printf("list length is %d\n", ListLength(&list));
  
     // DestoryList
     //
     //
-    DestoryList_Sq(&list); // destory the list
+    DestoryList(&list); // destory the list
     
-    DestoryList_Sq(&list_other);
+    DestoryList(&list_other);
     
-    DestoryList_Sq(&list_another);
+    DestoryList(&list_another);
  
     
     return 0;

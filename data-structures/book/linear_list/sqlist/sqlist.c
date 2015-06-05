@@ -4,8 +4,8 @@
 #include <stdio.h> // for test
 
 // initialize a sequence list
-Status InitList_Sq(Sqlist *L) {
-    L->elem = (ElemType *)malloc(sizeof(ElemType) * LIST_INIT_SIZE);
+Status_Sq InitList_Sq(Sqlist *L) {
+    L->elem = (ElemType_Sq *)malloc(sizeof(ElemType_Sq) * LIST_INIT_SIZE);
     if (!L->elem) {
         exit(OVERFLOW);
     }
@@ -17,20 +17,20 @@ Status InitList_Sq(Sqlist *L) {
 }
 
 // insert an element into the sequence list
-Status ListInsert_Sq(Sqlist *L, int i, ElemType e) {
+Status_Sq ListInsert_Sq(Sqlist *L, int i, ElemType_Sq e) {
     if (i < 1 || i > L->length + 1) { // the insert position validation check
         return ERROR;
     }
     if (L->length >= L->listsize) {
-        ElemType *newbase = (ElemType *)realloc(L->elem, (L->listsize + LISTINCREMENT) * sizeof(ElemType));
+        ElemType_Sq *newbase = (ElemType_Sq *)realloc(L->elem, (L->listsize + LISTINCREMENT) * sizeof(ElemType_Sq));
         if (!newbase) {
             exit(OVERFLOW);
         }
         L->elem = newbase;
         L->listsize += LISTINCREMENT;
     }
-    ElemType *q = &L->elem[i-1];
-    for (ElemType *p = &L->elem[L->length-1]; p >= q; --p) {
+    ElemType_Sq *q = &L->elem[i-1];
+    for (ElemType_Sq *p = &L->elem[L->length-1]; p >= q; --p) {
         *(p+1) = *p;
     }
     *q = e;
@@ -40,13 +40,13 @@ Status ListInsert_Sq(Sqlist *L, int i, ElemType e) {
 }
 
 // delete an element from a eisiting list
-Status ListDelete_Sq(Sqlist *L, int i, ElemType *e) {
+Status_Sq ListDelete_Sq(Sqlist *L, int i, ElemType_Sq *e) {
     if (i < 1 || i > L->length) { // the delete position validation check
         return ERROR;
     }
-    ElemType *p = &L->elem[i-1];
+    ElemType_Sq *p = &L->elem[i-1];
     *e = *p;
-    ElemType *q = L->elem + L->length - 1;
+    ElemType_Sq *q = L->elem + L->length - 1;
     for (++p; p <= q; ++p) {
         *(p-1) = *p;
     }
@@ -57,9 +57,9 @@ Status ListDelete_Sq(Sqlist *L, int i, ElemType *e) {
 
 
 // locate the position of an element in a existing sequence list
-int LocateElem_Sq(Sqlist *L, ElemType e, Bool (*compare)(ElemType, ElemType)) {
+int LocateElem_Sq(Sqlist *L, ElemType_Sq e, Bool (*compare)(ElemType_Sq, ElemType_Sq)) {
     int i = 1;
-    ElemType *p = L->elem;
+    ElemType_Sq *p = L->elem;
     while (i <= L->length && (*compare)(*p++, e) == False) {
         ++i;
     }
@@ -72,15 +72,15 @@ int LocateElem_Sq(Sqlist *L, ElemType e, Bool (*compare)(ElemType, ElemType)) {
 
 // merge the two sorted list into  a new sorted[just] list
 void MergeList_Sq(Sqlist *La, Sqlist *Lb, Sqlist *Lc) {
-    ElemType *pa = La->elem;
-    ElemType *pb = Lb->elem;
+    ElemType_Sq *pa = La->elem;
+    ElemType_Sq *pb = Lb->elem;
     Lc->listsize = Lc->length = La->length + Lb->length;
-    ElemType *pc = Lc->elem = (ElemType *)malloc(sizeof(ElemType) * Lc->listsize);
+    ElemType_Sq *pc = Lc->elem = (ElemType_Sq *)malloc(sizeof(ElemType_Sq) * Lc->listsize);
     if (!Lc->elem) {
         exit(OVERFLOW);
     }
-    ElemType *pa_last = La->elem + La->length - 1;
-    ElemType *pb_last = Lb->elem + Lb->length - 1;
+    ElemType_Sq *pa_last = La->elem + La->length - 1;
+    ElemType_Sq *pb_last = Lb->elem + Lb->length - 1;
     while (pa <= pa_last && pb <= pb_last) {
         if (*pa <= *pb) { // <=
             *pc++ = *pa++;
@@ -98,14 +98,14 @@ void MergeList_Sq(Sqlist *La, Sqlist *Lb, Sqlist *Lc) {
 
 
 // destory a sequence list
-Status DestoryList_Sq(Sqlist *L) {
+Status_Sq DestoryList_Sq(Sqlist *L) {
     ClearList_Sq(L);
     free(L->elem);
     return OK;
 }
 
 // clear a sequence list
-Status ClearList_Sq(Sqlist *L) {
+Status_Sq ClearList_Sq(Sqlist *L) {
     L->length = 0;
     if (L->length > LIST_INIT_SIZE) {
         free(L->elem + LIST_INIT_SIZE);
@@ -129,7 +129,7 @@ int ListLength_Sq(Sqlist *L) {
 }
 
 // get an element from a sequence list if it existing
-Status GetElem_Sq(Sqlist *L, int i, ElemType *e) {
+Status_Sq GetElem_Sq(Sqlist *L, int i, ElemType_Sq *e) {
     if (i < 1 || i > L->length) { // check the validation of the i[position]
         return ERROR;
     }else {
@@ -139,7 +139,7 @@ Status GetElem_Sq(Sqlist *L, int i, ElemType *e) {
 }
 
 // get the preview element of the current element in a existing sequence list
-Status PriorElem_Sq(Sqlist *L, ElemType cur_e, ElemType *pre_e, Bool (*compare)(ElemType, ElemType)) {
+Status_Sq PriorElem_Sq(Sqlist *L, ElemType_Sq cur_e, ElemType_Sq *pre_e, Bool (*compare)(ElemType_Sq, ElemType_Sq)) {
     int i;
     i = LocateElem_Sq(L, cur_e, compare);
     if (i > 1 && i <= L->length) {
@@ -151,7 +151,7 @@ Status PriorElem_Sq(Sqlist *L, ElemType cur_e, ElemType *pre_e, Bool (*compare)(
 }
 
 // get the next element of the current element in a exising sequence list if exist
-Status NextElem_Sq(Sqlist *L, ElemType cur_e, ElemType *next_e, Bool (*compare)(ElemType, ElemType)) {
+Status_Sq NextElem_Sq(Sqlist *L, ElemType_Sq cur_e, ElemType_Sq *next_e, Bool (*compare)(ElemType_Sq, ElemType_Sq)) {
     int i;
     i = LocateElem_Sq(L, cur_e, compare);
     if (i >= 1 && i < L->length) {
@@ -163,10 +163,10 @@ Status NextElem_Sq(Sqlist *L, ElemType cur_e, ElemType *next_e, Bool (*compare)(
 }
 
 // visit each element in a existing sequence list
-Status ListTraverse_Sq(Sqlist *L, Status (*vist)(ElemType e)) {
+Status_Sq ListTraverse_Sq(Sqlist *L, Status_Sq (*visit)(ElemType_Sq e)) {
     int counter = 1;
-    for (ElemType *p = L->elem; counter <= L->length; p++) {
-        if (!vist(*p)) {
+    for (ElemType_Sq *p = L->elem; counter <= L->length; p++) {
+        if (!visit(*p)) {
             return ERROR;
         }
         ++counter;
